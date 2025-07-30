@@ -1,133 +1,154 @@
-# DIGITECH - Ứng dụng di động bán hàng điện tử
+---
 
-## Mục lục
+## 📖 Mục lục
 
-1. [Giới thiệu](#giới-thiệu)
-2. [Tính năng](#tính-năng)
-3. [Kiến trúc tổng quan](#kiến-trúc-tổng-quan)
-4. [Công nghệ sử dụng](#công-nghệ-sử-dụng)
-5. [Yêu cầu hệ thống](#yêu-cầu-hệ-thống)
-6. [Cài đặt & Khởi động](#cài-đặt--khởi-động)
-7. [Cấu trúc thư mục](#cấu-trúc-thư-mục)
-8. [Cấu hình biến môi trường](#cấu-hình-biến-môi-trường)
-9. [Chạy ứng dụng](#chạy-ứng-dụng)
-10. [Kiểm thử](#kiểm-thử)
-11. [Đóng góp](#đóng-góp)
-12. [Giấy phép](#giấy-phép)
+* [Tổng quan](#tổng-quan)
+* [Tính năng chính](#tính-năng-chính)
+* [Công nghệ & Kiến trúc](#công-nghệ--kiến-trúc)
+* [Yêu cầu](#yêu-cầu)
+* [Cài đặt & Chạy thử](#cài-đặt--chạy-thử)
+* [Cấu trúc dự án](#cấu-trúc-dự-án)
+* [Biến môi trường](#biến-môi-trường)
+* [Ảnh màn hình](#ảnh-màn-hình)
+* [Kiểm thử](#kiểm-thử)
+* [Đóng góp](#đóng-góp)
+* [Giấy phép](#giấy-phép)
 
 ---
 
-## Giới thiệu
+## 📝 Tổng quan
 
-DIGITECH là ứng dụng di động bán hàng điện tử được xây dựng trên nền tảng Flutter, cho phép người dùng duyệt sản phẩm, thêm vào giỏ hàng, đặt hàng và thanh toán trực tiếp qua điện thoại. Ứng dụng hỗ trợ cả Android và iOS, thiết kế UI/UX hiện đại, tối ưu trải nghiệm mua sắm.
+DigiTechStore là ứng dụng di động bán hàng điện tử, hỗ trợ:
 
----
+* Truy cập nhanh vào danh mục sản phẩm, tìm kiếm nâng cao.
+* Quản lý giỏ hàng, đặt hàng và thanh toán tích hợp MoMo/Stripe.
+* Xem lịch sử đơn hàng và trạng thái giao hàng thời gian thực.
+* Thông báo đẩy về khuyến mãi, trạng thái đơn.
+* Chế độ người dùng/Quản trị viên với các quyền riêng biệt.
 
-## Tính năng
-
-* **Đăng ký/Đăng nhập**: Email/password, OTP điện thoại.
-* **Xác thực hai yếu tố (2FA)**.
-* **Duyệt & Tìm kiếm sản phẩm**: Theo danh mục, từ khóa.
-* **Chi tiết sản phẩm**: Hình ảnh, mô tả, đánh giá.
-* **Giỏ hàng**: Thêm/xóa/sửa số lượng sản phẩm.
-* **Đặt hàng & Thanh toán**: Hỗ trợ MoMo, thẻ tín dụng, ví điện tử.
-* **Lịch sử đơn hàng**: Theo dõi trạng thái đơn.
-* **Yêu thích (Favorites)**: Lưu sản phẩm quan tâm.
-* **Thông báo đẩy (Push Notifications)**.
-* **Quản lý hồ sơ người dùng**: Cập nhật thông tin, avatar.
-* **Chế độ Dark/Light**.
+Ứng dụng xây dựng trên Flutter, tương thích Android & iOS với trải nghiệm mượt mà.
 
 ---
 
-## Kiến trúc tổng quan
+## 🚀 Tính năng chính
 
-Ứng dụng tuân thủ mô hình **MVVM** kết hợp **Provider** (hoặc **GetX**):
-
-1. **Models**: Định nghĩa cấu trúc dữ liệu (Product, User, Order, Category).
-2. **ViewModel/Provider**: Logic xử lý, gọi API, quản lý state.
-3. **Views (Screens & Widgets)**: Giao diện người dùng.
-4. **Services**: Lớp giao tiếp REST API, local storage (SharedPreferences).
-
----
-
-## Công nghệ sử dụng
-
-* **Ngôn ngữ**: Dart
-* **Framework**: Flutter >= 3.x
-* **Quản lý state**: Provider / GetX
-* **HTTP & API**: `dio` hoặc `http`
-* **Local Storage**: `shared_preferences`, `hive`
-* **Push Notification**: Firebase Messaging / OneSignal
-* **Thanh toán**: MoMo SDK / Stripe
-* **Quản lý môi trường**: `flutter_dotenv`
-* **Quản lý routes**: `go_router` hoặc `auto_route`
+| Phân hệ              | Tính năng                                                          |
+| -------------------- | ------------------------------------------------------------------ |
+| **Xác thực**         | Đăng ký/Đăng nhập (Email/OTP), 2FA, Quên mật khẩu                  |
+| **Sản phẩm**         | Duyệt theo danh mục, Tìm kiếm, Bộ lọc, Đánh giá, Yêu thích         |
+| **Giỏ hàng**         | Thêm/Xóa/Sửa số lượng, Cập nhật tức thì                            |
+| **Thanh toán**       | Tích hợp MoMo SDK, Stripe, Xác nhận qua OTP                        |
+| **Đơn hàng**         | Xem chi tiết, Theo dõi trạng thái, Lịch sử, Hủy đơn                |
+| **Thông báo**        | Push Notifications (Firebase / OneSignal)                          |
+| **Hồ sơ người dùng** | Cập nhật thông tin cá nhân, Ảnh đại diện, Đổi mật khẩu             |
+| **Giao diện**        | Chế độ sáng/tối tự động, Responsive trên nhiều kích thước màn hình |
 
 ---
 
-## Yêu cầu hệ thống
+## 🛠️ Công nghệ & Kiến trúc
 
-* Flutter SDK >= 3.0
-* Dart SDK >= 2.18
-* Xcode 13+ (iOS)
-* Android Studio / Android SDK 30+
-* CocoaPods (iOS)
+* **Ngôn ngữ & Framework**: Dart, Flutter (>=3.x)
+* **State Management**: Provider / GetX
+* **HTTP & API**: Dio
+* **Local Storage**: Hive, Shared Preferences
+* **Authentication**: Firebase Auth, JWT
+* **Push Notification**: Firebase Messaging, OneSignal
+* **Payment**: MoMo SDK, Stripe API
+* **Tạo route**: GoRouter
+* **Quản lý môi trường**: flutter\_dotenv
 
----
+Ứng dụng tuân thủ pattern **MVVM**:
 
-## Cài đặt & Khởi động
-
-1. **Clone repository**
-
-   ```bash
-   git clone https://github.com/your-username/digitech_mobile.git
-   cd digitech_mobile
-   ```
-2. **Cài đặt dependencies**
-
-   ```bash
-   flutter pub get
-   ```
-3. **Cài đặt Pods (iOS)**
-
-   ```bash
-   cd ios && pod install && cd ..
-   ```
-4. **Tạo file cấu hình**
-
-   * Copy `.env.example` thành `.env` và điền API\_KEY, baseURL, etc.
+1. **Model**: Định nghĩa cấu trúc dữ liệu (User, Product, Order, Category).
+2. **ViewModel/Provider**: Xử lý logic, gọi API, quản lý state.
+3. **View (Widget)**: Hiển thị UI, lắng nghe state từ ViewModel.
+4. **Service**: Interface đến API, xử lý local storage, push notification.
 
 ---
 
-## Cấu trúc thư mục
+## 📋 Yêu cầu
 
-```
-digitech_mobile/
-├─ android/              # Android project
-├─ ios/                  # iOS project
-├─ lib/
-│  ├─ main.dart          # Entry point
-│  ├─ models/            # Định nghĩa dữ liệu
-│  ├─ providers/         # Business logic & state
-│  ├─ services/          # API, local storage
-│  ├─ views/             # Screens & Widgets
-│  ├─ routes/            # Định nghĩa route
-│  ├─ utils/             # Hàm tiện ích
-│  └─ theme/             # Theme light & dark
-├─ test/                 # Unit & widget tests
-├─ .env.example          # Mẫu biến môi trường
-└─ pubspec.yaml
+* Flutter SDK >= **3.0**
+* Dart SDK >= **2.18**
+* Android Studio / Xcode (phiên bản mới nhất)
+* Node.js & npm (nếu backend đi kèm)
+* CocoaPods (macOS cho iOS)
+
+---
+
+## 🏁 Cài đặt & Chạy thử
+
+```bash
+# Clone repo
+git clone https://github.com/KhoiNguyen26iq/DigiTechStore.git
+cd DigiTechStore
+
+# Cài đặt dependencies Flutter
+flutter pub get
+
+# Khởi tạo iOS pods (nếu trên macOS)
+cd ios && pod install && cd ..
+
+# Sao chép file env
+cp .env.example .env
+# Điền biến trong .env (API_URL, KEYS,...)
+
+# Chạy app Android
+e flutter run -d android
+
+# Chạy app iOS
+e flutter run -d ios
 ```
 
 ---
 
-## Cấu hình biến môi trường
+## 📂 Cấu trúc dự án
 
-Tạo file `.env` tại root với nội dung:
+Dưới đây là cấu trúc thư mục chính của repository **DigiTechStore**, phản ánh tổ chức rõ ràng giữa frontend Flutter và backend Node.js:
 
 ```
-API_BASE_URL=https://api.digitech.com
-API_KEY=YOUR_API_KEY_HERE
-ONESIGNAL_APP_ID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+DigiTechStore/                     # Root repository
+├─ .vscode/                        # Cấu hình VSCode (settings, extensions)
+├─ client_side/                    # Mã nguồn ứng dụng Flutter
+│   └─ flutter_ecommerce_start/    # Flutter project
+│      ├─ android/                 # Android native project
+│      ├─ ios/                     # iOS native project
+│      ├─ lib/                     # Mã nguồn Dart chính
+│      │  ├─ main.dart             # Entry point của ứng dụng
+│      │  ├─ models/               # Định nghĩa các lớp dữ liệu (Product, User, Order,...)
+│      │  ├─ providers/            # ViewModel / Provider / GetX
+│      │  ├─ services/             # Giao tiếp API, local storage, notification
+│      │  ├─ views/                # Screens & Widgets
+│      │  ├─ routes/               # Cấu hình điều hướng (GoRouter)
+│      │  ├─ utils/                # Các hàm tiện ích, extensions
+│      │  └─ theme/                # Theme light & dark, styling
+│      ├─ assets/                  # Hình ảnh, icons, fonts, animations
+│      ├─ test/                    # Unit & Widget tests
+│      ├─ pubspec.yaml             # Khai báo dependencies của Flutter
+│      └─ .env.example             # Mẫu biến môi trường (API keys, URLs)
+├─ server_side/                    # Mã nguồn backend Node.js + Express
+│   └─ online_store_api/           # Project RESTful API
+│      ├─ controllers/             # Xử lý logic cho các route
+│      ├─ routes/                  # Định nghĩa endpoint (users, products, orders,...)
+│      ├─ models/                  # Schema Mongoose (MongoDB)
+│      ├─ utils/                   # Middleware, helpers, cấu hình chung
+│      ├─ .env.example             # Mẫu biến môi trường cho backend
+│      ├─ index.js                 # Entry point khởi tạo server
+│      ├─ package.json             # Khai báo dependencies Node.js
+│      └─ README.md                # Hướng dẫn backend riêng (nếu có)
+├─ .gitignore                      # Quy định file/thư mục không track bởi Git
+├─ README.md                       # Tài liệu hướng dẫn tổng quan dự án
+└─ .DS_Store                       # Metadata macOS (nên thêm vào .gitignore)
+```
+
+## 🔧 Biến môi trường
+
+Các biến trong file `.env`:
+
+```
+API_BASE_URL=https://api.digitechstore.com
+API_KEY=YOUR_API_KEY
+ONESIGNAL_APP_ID=XXXX-XXXX
 MOMO_PARTNER_CODE=...
 MOMO_ACCESS_KEY=...
 MOMO_SECRET_KEY=...
@@ -135,48 +156,41 @@ MOMO_SECRET_KEY=...
 
 ---
 
-## Chạy ứng dụng
-
-* **Android**:
-
-  ```bash
-  flutter run -d android
-  ```
-* **iOS** (trên macOS):
-
-  ```bash
-  flutter run -d ios
-  ```
-* **Web**: (nếu hỗ trợ web)
-
-  ```bash
-  flutter run -d chrome
-  ```
+## 📸 Ảnh màn hình
 
 ---
 
-## Kiểm thử
+## ✅ Kiểm thử
 
-* Unit tests:
+* **Unit Tests**:
 
   ```bash
   flutter test test/unit
   ```
-* Widget tests:
+* **Widget Tests**:
 
   ```bash
   flutter test test/widget
   ```
-* Sử dụng `flutter test` để chạy tất cả.
+* **Integration Tests** (nếu có):
+
+  ```bash
+  flutter drive --target=test_driver/app.dart
+  ```
 
 ---
 
-## Đóng góp
+## 🤝 Đóng góp
 
-Mọi đóng góp (issue, pull request) đều được hoan nghênh! Vui lòng xem [CONTRIBUTING.md](CONTRIBUTING.md) để biết chi tiết.
+1. Fork repository
+2. Tạo branch `feature/your-feature`
+3. Commit và push lên branch của bạn
+4. Tạo Pull Request trên GitHub
+
+Vui lòng đọc [CONTRIBUTING.md](CONTRIBUTING.md) để biết quy tắc code style, commit message.
 
 ---
 
-## Giấy phép
+## 📄 Giấy phép
 
-Distributed under the MIT License. Xem [LICENSE](LICENSE) để biết chi tiết.
+Distributed under the **MIT License**. Xem chi tiết trong [LICENSE](LICENSE).
