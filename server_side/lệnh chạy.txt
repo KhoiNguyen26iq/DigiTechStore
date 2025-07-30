@@ -1,0 +1,9 @@
+npm i
+npm i express
+npm i body-parser
+
+node index.js
+
+cài flutter
+git clone https://github.com/flutter/flutter.git -b stable
+
