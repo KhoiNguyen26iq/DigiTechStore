@@ -1,4 +1,7 @@
 ---
+title: "DigiTechStore"
+description: "README cho dự án DigiTechStore"
+---
 
 ## 📖 Mục lục
 
